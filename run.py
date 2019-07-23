@@ -1,6 +1,7 @@
 import sys
 from math import exp
 
+learn = 0.5
 entrada = []
 
 
@@ -9,6 +10,7 @@ def get_bias(archivo):
     bias = open(archivo, "r")
     for a in bias.readlines():
         lista.append(float(a))
+    bias.close()
     return lista
 
 
@@ -17,8 +19,11 @@ def get_weights(archivo):
     weights = open(archivo, "r")
     for a in weights.readlines():
         aux = a.split("	")
-        laux = [float(aux[0]), float(aux[1]), float(aux[2])]
+        laux = []
+        for index_aux in aux:
+            laux.append(float(index_aux))
         lista.append(laux)
+    weights.close()
     return lista
 
 
@@ -67,11 +72,23 @@ if __name__ == '__main__':
     # print("sigmoidal_oculta", sigmoidal_oculta)
     # print("sigma_salida", sigma_salida)
     # print("peso_entrada_oculta", peso_entrada_oculta)
+    # print("peso_salida_oculta", peso_salida_oculta)
     # print("sigmoidal_salida", sigmoidal_salida)
 
-    if sigmoidal_salida[0] > 0.8:
+    # print(sigmoidal_salida[0])
+    # print(sigmoidal_salida[1])
+    # print(sigmoidal_salida[2])
+
+    output1 = float("{0:.2f}".format(sigmoidal_salida[0]))
+    output2 = float("{0:.2f}".format(sigmoidal_salida[1]))
+    output3 = float("{0:.2f}".format(sigmoidal_salida[2]))
+
+    print(output1, output2, output3)
+    # print(type(output1), type(output2), type(output3))
+
+    if output1 > learn:
         print("GIRA A LA IZQUIERDA")
-    if sigmoidal_salida[1] > 0.8:
+    if output2 > learn:
         print("AVANZA")
-    if sigmoidal_salida[2] > 0.8:
+    if output3 > learn:
         print("GIRA A LA DERECHA")
