@@ -51,17 +51,8 @@ bias_salida = get_bias("BiasSalida.txt")
 peso_entrada_oculta = get_weights("PesosEntradaOculta.txt")
 peso_salida_oculta = get_weights("PesosSalidaOculta.txt")
 
-if __name__ == '__main__':
-    args = sys.argv
-    if len(args) is not 1:
-        for index_args in range(len(args)):
-            if index_args is 0:
-                pass
-            else:
-                entrada.append(int(sys.argv[index_args]))
-    else:
-        entrada = [0, 0, 0, 1, 1, 1]
 
+def get_action(entrada):
     sigmoidal_entrada = get_sigmoidal(sigma=entrada, bias=bias_entrada)
     sigma_oculta = get_sigma(sigmoidal_entrada, peso_entrada_oculta)
     sigmoidal_oculta = get_sigmoidal(sigma=sigma_oculta, bias=bias_oculta)
@@ -87,8 +78,45 @@ if __name__ == '__main__':
     # print(type(output1), type(output2), type(output3))
 
     if output1 > learn:
-        print("GIRA A LA IZQUIERDA")
-    if output2 > learn:
-        print("AVANZA")
-    if output3 > learn:
-        print("GIRA A LA DERECHA")
+        return "GIRA A LA IZQUIERDA"
+    else:
+        if output2 > learn:
+            return "AVANZA"
+        else:
+            if output3 > learn:
+                return "GIRA A LA DERECHA"
+            else:
+                return "NO APRENDÍ ÉSTE PATRÓN"
+
+
+# if __name__ == '__main__':
+#     args = sys.argv
+#     if len(args) is not 1:
+#         for index_args in range(len(args)):
+#             if index_args is 0:
+#                 pass
+#             else:
+#                 entrada.append(int(sys.argv[index_args]))
+#     else:
+#         entrada = [0, 0, 0, 1, 1, 1]
+#
+#     sigmoidal_entrada = get_sigmoidal(sigma=entrada, bias=bias_entrada)
+#     sigma_oculta = get_sigma(sigmoidal_entrada, peso_entrada_oculta)
+#     sigmoidal_oculta = get_sigmoidal(sigma=sigma_oculta, bias=bias_oculta)
+#     sigma_salida = get_sigma(sigmoidal_oculta, peso_salida_oculta)
+#     sigmoidal_salida = get_sigmoidal(sigma=sigma_salida, bias=bias_salida)
+#
+#     output1 = float("{0:.2f}".format(sigmoidal_salida[0]))
+#     output2 = float("{0:.2f}".format(sigmoidal_salida[1]))
+#     output3 = float("{0:.2f}".format(sigmoidal_salida[2]))
+#
+#     print(output1, output2, output3)
+#
+#     if output1 > learn:
+#         print("GIRA A LA IZQUIERDA")
+#     if output2 > learn:
+#         print("AVANZA")
+#     if output3 > learn:
+#         print("GIRA A LA DERECHA")
+# entrada_i = [0, 0, 0, 0, 0, -1]
+# get_action(entrada_i)
